@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Black Friday 2026 · Dra. Rosana Vecchi</title>
+<meta name="description" content="No dia 4 de novembro, às 20h, a Dra. Rosana Vecchi revela ao vivo uma proposta inédita para esta Black Friday. Inscrição gratuita.">
+<meta property="og:title" content="A maior Black Friday que a Dra. Rosana Vecchi já preparou">
+<meta property="og:description" content="4 de novembro, 20h, ao vivo. Garanta seu acesso gratuito.">
+<meta property="og:image" content="https://humbertovecchi.github.io/blackfriday/img/rosana-branco.jpg">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#151515">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@500;600&family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --preto:#151515;
+    --champ:#B79A69;
+    --champ-claro:#D8BE8E;
+    --off:#F5F1EA;
+    --branco:#FFFFFF;
+    --ouro:linear-gradient(180deg,#F3DDA8 0%,#D9B56E 40%,#B98C47 72%,#E2C27F 100%);
+    --ouro-borda:linear-gradient(135deg,#F1D9A0 0%,#B98C47 30%,#E6C88A 52%,#9C7436 78%,#E9CF96 100%);
+    --display:"Playfair Display", "EB Garamond", Georgia, serif;
+    --sc:"Cormorant SC", "Cormorant Garamond", Georgia, serif;
+    --sans:"Montserrat", "Lato", system-ui, -apple-system, sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{background:#0e0c0a;color:var(--branco);font-family:var(--sans);line-height:1.45;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  img{display:block;max-width:100%}
+
+  /* ===== elementos comuns ===== */
+  .eyebrow{display:flex;align-items:center;gap:.9em;font-size:clamp(9px,2.1vw,13px);letter-spacing:.3em;text-transform:uppercase;color:#D2AE6C;font-weight:600}
+  .eyebrow::after{content:"";height:1px;width:clamp(50px,13vw,110px);background:linear-gradient(90deg,#E2C27F,rgba(226,194,127,0))}
+  .eyebrow.centro{justify-content:center}
+  .eyebrow.centro::before{content:"";height:1px;width:clamp(50px,13vw,110px);background:linear-gradient(270deg,#E2C27F,rgba(226,194,127,0))}
+  .assinatura{font-family:var(--sc);font-weight:500;letter-spacing:.04em;color:var(--champ-claro);line-height:1.1}
+  svg.ic{stroke:#D7B472;fill:none;flex:none}
+
+  /* ===== formulário (o mesmo nas duas seções) ===== */
+  .card{background:linear-gradient(180deg,rgba(14,12,10,.94),rgba(10,9,8,.97)) padding-box,var(--ouro-borda) border-box;border:1.5px solid transparent;border-radius:10px;padding:clamp(16px,3.6vw,28px);box-shadow:0 20px 50px -20px rgba(0,0,0,.8)}
+  .card h2{font-family:var(--sans);font-size:clamp(12px,2.6vw,18px);font-weight:600;letter-spacing:0;white-space:nowrap;text-transform:uppercase;line-height:1.2}
+  .card .sub{font-size:clamp(10px,2.05vw,14.5px);letter-spacing:-.01em;color:rgba(255,255,255,.85);margin:.35em 0 1em;line-height:1.35}
+  .campo{position:relative;margin-bottom:clamp(6px,1.3vw,10px)}
+  .campo svg{position:absolute;left:clamp(10px,2.4vw,16px);top:50%;transform:translateY(-50%);width:clamp(15px,3.3vw,20px);height:clamp(15px,3.3vw,20px);stroke:#C08A4E;stroke-width:1.7;pointer-events:none}
+  .campo input{width:100%;height:clamp(36px,6.4vw,50px);border:1px solid transparent;border-radius:5px;background:var(--branco);padding:0 12px 0 clamp(34px,8vw,48px);font:500 clamp(13px,2.2vw,15.5px) var(--sans);color:#2a2622;outline:none;transition:border-color .2s,box-shadow .2s}
+  .campo input::placeholder{color:#7d7871;font-weight:400}
+  .campo input:focus{border-color:var(--champ);box-shadow:0 0 0 3px rgba(183,154,105,.35)}
+  .campo input.erro{border-color:#c0675a;box-shadow:0 0 0 3px rgba(192,103,90,.3)}
+  .btn{width:100%;height:clamp(42px,7.8vw,56px);margin-top:clamp(4px,1vw,8px);border:0;border-radius:5px;cursor:pointer;background:linear-gradient(180deg,#F0D9A4 0%,#D6B26E 38%,#B88A45 78%,#CFA862 100%);color:#16120d;font:700 clamp(10px,2.05vw,15px) var(--sans);letter-spacing:0;white-space:nowrap;text-transform:uppercase;display:flex;align-items:center;justify-content:center;gap:.5em;box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 8px 22px -10px rgba(183,154,105,.7);transition:filter .2s,transform .15s}
+  .btn{position:relative;overflow:hidden}
+  .btn::after{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,250,235,.55),transparent);transform:skewX(-20deg);animation:brilho 4.5s ease-in-out infinite}
+  @keyframes brilho{0%,60%{left:-60%}100%{left:130%}}
+  .btn:hover{filter:brightness(1.07)}
+  .btn:active{transform:translateY(1px)}
+  .btn[disabled]{opacity:.7;cursor:wait}
+  .seguro{display:flex;gap:clamp(10px,3vw,20px);align-items:center;margin-top:clamp(12px,2.6vw,18px);padding-left:clamp(4px,1.2vw,8px);font-size:clamp(9px,1.8vw,13px);color:rgba(255,255,255,.85);line-height:1.4}
+  .seguro svg{width:clamp(18px,4vw,24px);height:clamp(18px,4vw,24px);stroke-width:1.6}
+  .msg{display:none;margin-top:10px;font-size:clamp(11px,2.3vw,13.5px);text-align:center;color:var(--champ-claro)}
+  .msg.on{display:block}
+
+  /* ===== 01 · HERO ===== */
+  .hero{position:relative;overflow:hidden;min-height:118vw;background:#0d0b09}
+  .hero::before{content:"";position:absolute;inset:0;background:
+      linear-gradient(90deg,rgba(10,8,6,.55) 0%,rgba(10,8,6,.3) 55%,rgba(10,8,6,0) 100%),
+      linear-gradient(0deg,#0d0b09 0%,rgba(13,11,9,0) 35%),
+      url(img/fundo-topo.jpg) 72% center/cover no-repeat;filter:brightness(1.3) saturate(1.05)}
+  /* luzes desfocadas do ambiente */
+  .luz{position:absolute;pointer-events:none;filter:blur(9px)}
+  .luz.l1{left:-1vw;top:-2vw;width:4.5vw;height:72%;background:linear-gradient(180deg,rgba(228,206,168,.6),rgba(200,170,125,.25) 60%,transparent)}
+  .luz.l2{left:79%;top:-2vw;width:5vw;height:44%;background:linear-gradient(180deg,rgba(246,228,192,.75),rgba(210,180,135,.25) 70%,transparent);filter:blur(12px)}
+  .luz.l3{left:20%;top:-1vw;width:2vw;height:30%;background:linear-gradient(180deg,rgba(200,170,125,.22),transparent);filter:blur(10px)}
+  .luz.l5{left:2%;top:46%;width:30%;height:22%;background:radial-gradient(closest-side,rgba(150,110,65,.35),transparent);filter:blur(14px)}
+  .luz.l6{left:58%;top:6%;width:12%;height:30%;background:radial-gradient(closest-side,rgba(180,140,90,.3),transparent);filter:blur(16px)}
+  .luz.l4{left:0;right:0;top:78%;height:1px;background:rgba(183,154,105,.18);filter:blur(1px)}
+  .hero-foto{position:absolute;left:45vw;top:2.7vw;width:64vw;pointer-events:none}
+  .hero-foto img{width:100%;height:auto;
+    -webkit-mask-image:linear-gradient(180deg,#000 75%,transparent 98%);mask-image:linear-gradient(180deg,#000 75%,transparent 98%)}
+  .hero-in{position:relative;z-index:2;padding:4.6vw 0 5vw 9.5vw}
+  .hero .assinatura{font-size:clamp(20px,5vw,38px);font-weight:600;letter-spacing:.05em;margin:.35em 0 .25em;color:#D9B56E;background:var(--ouro);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .hero h1{font-family:var(--display);font-weight:500;line-height:.98;width:54vw}
+  .hero h1 .l1{display:block;font-size:clamp(29px,7.2vw,76px);letter-spacing:-.015em}
+  .hero h1 .l2{display:block;font-size:clamp(21px,5.1vw,54px);color:#D9B56E;background:var(--ouro);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;padding-bottom:.08em;line-height:1.0;margin-top:.12em;letter-spacing:-.01em}
+  .hero .lead{width:42vw;margin-top:clamp(10px,2.4vw,20px);font-size:clamp(11px,2.4vw,17px);line-height:1.2;letter-spacing:-.005em;color:rgba(255,255,255,.92)}
+  .chips{display:flex;gap:1.1vw;margin-top:clamp(12px,3.2vw,26px)}
+  .chip{display:flex;align-items:center;gap:clamp(6px,2vw,12px);height:clamp(34px,7.8vw,54px);padding:0 clamp(8px,2.3vw,16px);border:1.2px solid transparent;border-radius:6px;background:linear-gradient(rgba(14,12,10,.9),rgba(14,12,10,.9)) padding-box,var(--ouro-borda) border-box;font-size:clamp(8px,1.65vw,12px);font-weight:600;letter-spacing:.02em;text-transform:uppercase;line-height:1.2}
+  .chip svg{width:clamp(16px,4vw,26px);height:clamp(16px,4vw,26px);stroke-width:1.5}
+  .chip.col{flex-direction:column;justify-content:center;gap:2px}
+  .chip.col svg{width:clamp(14px,3.4vw,22px);height:clamp(14px,3.4vw,22px)}
+  .hero .card{width:clamp(282px,60vw,470px);margin-top:clamp(10px,2.4vw,22px)}
+
+  /* ===== 02 · CONEXÃO ===== */
+  .conexao{display:grid;grid-template-columns:57% 43%;background:var(--off);color:#1d1a17;min-height:59vw}
+  .conexao-foto{position:relative;overflow:hidden;background:#ECE7DF}
+  .conexao-foto img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:0 0;transform:scale(1.12);transform-origin:0 0}
+  .conexao-foto::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(245,241,234,0) 78%,rgba(245,241,234,.85) 96%,var(--off) 100%)}
+  .conexao-foto img{-webkit-mask-image:linear-gradient(90deg,#000 80%,rgba(0,0,0,.25) 100%);mask-image:linear-gradient(90deg,#000 80%,rgba(0,0,0,.25) 100%)}
+  .conexao-foto .tag{position:absolute;z-index:2;left:4vw;top:2.8vw;font-size:clamp(6.5px,1.45vw,11px);letter-spacing:.32em;text-transform:uppercase;color:#8E7148;line-height:1.75;font-weight:500}
+  .conexao-texto{padding:2.4vw 5vw 5vw 1vw;display:flex;flex-direction:column;justify-content:center}
+  .conexao .eyebrow{font-size:clamp(6.5px,1.45vw,11px);color:#a88a5a;gap:.8em;letter-spacing:.24em;margin-bottom:clamp(8px,2vw,18px)}
+  .conexao .eyebrow::after{flex:1;width:auto}
+  .conexao h2{font-family:var(--display);font-weight:400;font-size:clamp(19px,4.75vw,50px);line-height:1.04;color:#14110e;margin-bottom:clamp(8px,2vw,20px)}
+  .conexao p{font-size:clamp(10.5px,2.2vw,17px);line-height:1.3;color:#2a2622;margin-bottom:clamp(8px,2vw,18px)}
+  .conexao p.destaque{font-weight:600;margin-bottom:0}
+  .conexao p.destaque span{color:#B98C47;background:linear-gradient(180deg,#D6AF66 0%,#BE8F4A 55%,#A97A38 85%,#C79C58 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+
+  /* ===== 03 · CONVERSÃO ===== */
+  .final{position:relative;overflow:hidden;text-align:center;padding:2.6vw 0 5vw;background:radial-gradient(70% 60% at 50% 40%,#17130f,#0b0a08 70%)}
+  .onda{position:absolute;top:0;height:100%;width:auto;pointer-events:none;opacity:.95}
+  .onda.esq{left:0}
+  .onda.dir{right:0}
+  .final-in{position:relative;z-index:2;padding:0 6vw}
+  .final .assinatura{display:block;font-size:clamp(22px,5.6vw,50px);color:#EFE8DC;letter-spacing:.06em;margin:.25em 0 .35em}
+  .info-linha{display:flex;align-items:center;justify-content:center;font-size:clamp(9.5px,2.1vw,14px);font-weight:600;letter-spacing:.02em;text-transform:uppercase}
+  .info-linha span{display:flex;align-items:center;gap:clamp(6px,1.6vw,12px);padding:0 clamp(10px,3.6vw,30px)}
+  .info-linha span+span{border-left:1px solid rgba(183,154,105,.55)}
+  .info-linha svg{width:clamp(15px,3.6vw,24px);height:clamp(15px,3.6vw,24px);stroke-width:1.5}
+  .final .card{width:clamp(280px,65vw,480px);margin:clamp(12px,2.8vw,26px) auto 0;text-align:left}
+  .final .card h2,.final .card .sub{text-align:center}
+  .final .card h2{font-size:clamp(12px,2.5vw,17px)}
+
+  .faixa{position:relative;z-index:3;height:clamp(4px,1vw,7px);background:linear-gradient(90deg,#6f4f22 0%,#C99A55 14%,#F6E3B6 30%,#B98C47 46%,#EFD7A0 62%,#A97E3F 80%,#E6C88A 92%,#7a5628 100%);box-shadow:0 0 14px rgba(214,178,110,.45),inset 0 1px 0 rgba(255,246,220,.7),inset 0 -1px 0 rgba(80,55,20,.6)}
+  .surge{opacity:0;transform:translateY(18px);transition:opacity .9s ease,transform .9s ease}
+  .surge.on{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){.surge{opacity:1;transform:none;transition:none}.btn::after{animation:none}}
+  .rodape{background:#0b0a08;border-top:1px solid rgba(183,154,105,.15);padding:20px 20px 26px;text-align:center;font-size:11.5px;color:rgba(255,255,255,.45);line-height:1.6}
+
+  /* ===== desktop ===== */
+  @media (min-width:900px){
+    .hero{min-height:0}
+    .hero::before{background:linear-gradient(90deg,rgba(10,8,6,.92) 0%,rgba(10,8,6,.78) 30%,rgba(10,8,6,.2) 55%,rgba(10,8,6,0) 100%),linear-gradient(0deg,#0d0b09 0%,rgba(13,11,9,0) 30%),url(img/fundo-topo.jpg) center 40%/cover no-repeat}
+    .hero-in{max-width:1200px;margin:0 auto;padding:56px 60px 80px}
+    .hero-foto{left:auto;right:max(-40px,calc(50% - 640px));top:24px;width:620px}
+    .luz.l2{left:auto;right:max(60px,calc(50% - 470px));width:46px}
+    .luz.l1{width:40px}
+    .hero h1{width:620px}
+    .hero h1 .l1{font-size:72px}
+    .hero h1 .l2{font-size:54px}
+    .hero .lead{width:470px}
+    .chips{gap:10px}
+    .hero .card{width:470px}
+
+    .conexao{min-height:620px;grid-template-columns:minmax(0,46%) 1fr}
+    .conexao-foto img{object-position:60% 20%;transform:none}
+    .conexao-texto{padding-left:40px !important}
+    .conexao-texto{padding:70px max(60px,calc(50vw - 600px)) 70px 20px}
+    .conexao .eyebrow,.conexao h2,.conexao p{max-width:520px}
+
+    .final{padding:80px 0 100px}
+    .onda{height:120%;top:-10%}
+  }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-cal" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4M7 14h2M11 14h2M15 14h2M7 17.5h2M11 17.5h2"/></symbol>
+  <symbol id="i-relogio" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+  <symbol id="i-live" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="2"/><path d="M8.5 8.5a5 5 0 0 0 0 7M15.5 8.5a5 5 0 0 1 0 7M5.6 5.6a9 9 0 0 0 0 12.8M18.4 5.6a9 9 0 0 1 0 12.8"/></symbol>
+  <symbol id="i-user" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></symbol>
+  <symbol id="i-whats" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 20.5l1.3-4A8.5 8.5 0 1 1 8 19.5z"/><path d="M9 8.5c0 3.5 3 6.5 6.5 6.5l1-1.6-2-1-1 1c-1-.4-2.4-1.8-2.8-2.8l1-1-1-2z"/></symbol>
+  <symbol id="i-mail" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="1.5"/><path d="M3 6.5l9 6.5 9-6.5"/></symbol>
+  <symbol id="i-cadeado" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/><circle cx="12" cy="15.5" r="1.2"/></symbol>
+</svg>
+
+<template id="tpl-form">
+  <form class="card lead-form" novalidate>
+    <h2>Garanta seu acesso gratuito</h2>
+    <p class="sub">Cadastre-se e entre no grupo oficial para receber as informações e o acesso à apresentação.</p>
+    <div class="campo"><svg class="ic"><use href="#i-user"/></svg><input name="nome" type="text" placeholder="Nome completo" autocomplete="name" aria-label="Nome completo"></div>
+    <div class="campo"><svg class="ic"><use href="#i-whats"/></svg><input name="whatsapp" type="tel" inputmode="tel" placeholder="WhatsApp com DDD" autocomplete="tel-national" aria-label="WhatsApp com DDD"></div>
+    <div class="campo"><svg class="ic"><use href="#i-mail"/></svg><input name="email" type="email" inputmode="email" placeholder="Seu melhor e-mail" autocomplete="email" aria-label="Seu melhor e-mail"></div>
+    <button class="btn" type="submit">Quero participar da Black Friday <span aria-hidden="true">→</span></button>
+    <p class="msg" role="status"></p>
+    <div class="seguro"><svg class="ic"><use href="#i-cadeado"/></svg><span>Inscrição gratuita. Após o cadastro, você será direcionado ao grupo oficial de WhatsApp.</span></div>
+  </form>
+</template>
+
+<!-- 01 · HERO -->
+<section class="hero">
+    <div class="hero-foto"><img src="img/rosana-topo-v3.webp" alt="Dra. Rosana Vecchi" fetchpriority="high"></div>
+  <div class="hero-in">
+    <p class="eyebrow">Black Friday 2026</p>
+    <p class="assinatura">Dra. Rosana Vecchi</p>
+    <h1><span class="l1">A maior<br>Black Friday</span><span class="l2">que a Dra. Rosana Vecchi já preparou.</span></h1>
+    <p class="lead">No dia 4 de novembro, às 20h, a Dra. Rosana Vecchi vai revelar, ao vivo, uma proposta inédita, preparada especialmente para esta Black Friday.</p>
+    <div class="chips">
+      <div class="chip"><svg class="ic"><use href="#i-cal"/></svg><span>04 de<br>novembro</span></div>
+      <div class="chip col"><svg class="ic"><use href="#i-relogio"/></svg><span>20h</span></div>
+      <div class="chip"><svg class="ic"><use href="#i-live"/></svg><span>Ao vivo</span></div>
+    </div>
+    <div class="slot-form"></div>
+  </div>
+</section>
+
+<div class="faixa" aria-hidden="true"></div>
+
+<!-- 02 · CONEXÃO -->
+<section class="conexao">
+  <div class="conexao-foto">
+    <img src="img/rosana-preto.jpg" alt="Dra. Rosana Vecchi" loading="lazy">
+    <p class="tag">Referência<br>em estética<br>para<br>profissionais<br>que buscam<br>evolução</p>
+  </div>
+  <div class="conexao-texto">
+    <p class="eyebrow">Uma oportunidade especial</p>
+    <h2>O próximo passo da sua evolução na estética pode começar aqui.</h2>
+    <p>A Dra. Rosana Vecchi está preparando uma oportunidade especial para profissionais que desejam ampliar seus conhecimentos, aperfeiçoar sua atuação e evoluir com a experiência e o direcionamento de uma das referências da estética.</p>
+    <p class="destaque"><span>A proposta completa e a condição exclusiva de Black Friday serão reveladas ao vivo.</span></p>
+  </div>
+</section>
+
+<div class="faixa" aria-hidden="true"></div>
+
+<!-- 03 · CONVERSÃO -->
+<section class="final">
+  <svg class="onda esq" viewBox="0 0 220 345" preserveAspectRatio="xMinYMid meet" aria-hidden="true">
+    <defs>
+      <linearGradient id="cetim" x1="0" y1="0" x2="1" y2=".3">
+        <stop offset="0" stop-color="#20160c"/><stop offset=".28" stop-color="#7a5529"/><stop offset=".46" stop-color="#E9CD95"/><stop offset=".52" stop-color="#FFF1D2"/><stop offset=".6" stop-color="#C99A55"/><stop offset=".82" stop-color="#5a3e1e"/><stop offset="1" stop-color="#140d07" stop-opacity="0"/>
+      </linearGradient>
+      <linearGradient id="cetim2" x1="1" y1="0" x2="0" y2=".3">
+        <stop offset="0" stop-color="#20160c"/><stop offset=".28" stop-color="#7a5529"/><stop offset=".46" stop-color="#E9CD95"/><stop offset=".52" stop-color="#FFF1D2"/><stop offset=".6" stop-color="#C99A55"/><stop offset=".82" stop-color="#5a3e1e"/><stop offset="1" stop-color="#140d07" stop-opacity="0"/>
+      </linearGradient>
+      <linearGradient id="fio" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF3D6" stop-opacity="0"/><stop offset=".35" stop-color="#FFF3D6"/><stop offset="1" stop-color="#E2C27F" stop-opacity=".2"/></linearGradient>
+      <filter id="glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="10"/></filter>
+    </defs>
+    <path d="M0 30 C 55 110, 80 225, 190 345 L 100 345 C 40 270, 25 160, 0 110 Z" fill="#B88B4A" opacity=".22" filter="url(#glow)"/>
+    <path d="M0 30 C 55 110, 80 225, 190 345 L 100 345 C 40 270, 25 160, 0 110 Z" fill="url(#cetim)" opacity=".92"/>
+    <path d="M0 150 C 32 212, 62 292, 128 345 L 74 345 C 36 300, 15 240, 0 212 Z" fill="url(#cetim)"/>
+    <path d="M0 252 C 20 288, 40 322, 64 345 L 0 345 Z" fill="url(#cetim)" opacity=".8"/>
+    <g fill="none" stroke="url(#fio)" stroke-linecap="round">
+      <path d="M0 31 C 55 111, 80 226, 190 345" stroke-width="1.1"/>
+      <path d="M0 70 C 45 140, 62 230, 150 345" stroke-width=".5" opacity=".6"/>
+      <path d="M0 151 C 32 213, 62 293, 128 345" stroke-width=".9"/>
+      <path d="M0 180 C 26 232, 48 296, 100 345" stroke-width=".4" opacity=".5"/>
+      <path d="M0 253 C 20 289, 40 323, 64 345" stroke-width=".7" opacity=".8"/>
+    </g>
+  </svg>
+  <svg class="onda dir" viewBox="0 0 220 345" preserveAspectRatio="xMaxYMid meet" aria-hidden="true">
+    <path d="M220 0 C 150 60, 115 150, 142 232 C 158 282, 196 322, 220 345 L 220 282 C 196 250, 182 200, 185 150 C 189 90, 206 40, 220 25 Z" fill="#B88B4A" opacity=".22" filter="url(#glow)"/>
+    <path d="M220 0 C 150 60, 115 150, 142 232 C 158 282, 196 322, 220 345 L 220 282 C 196 250, 182 200, 185 150 C 189 90, 206 40, 220 25 Z" fill="url(#cetim2)" opacity=".95"/>
+    <path d="M220 70 C 176 120, 160 192, 192 262 C 202 282, 213 292, 220 297 L 220 200 C 204 170, 204 130, 220 105 Z" fill="url(#cetim2)"/>
+    <path d="M220 -10 C 120 50, 78 162, 120 252 C 142 298, 186 332, 220 345 L 220 330 C 176 300, 134 252, 126 192 C 118 120, 166 40, 220 5 Z" fill="url(#cetim2)" opacity=".55"/>
+    <g fill="none" stroke="url(#fio)" stroke-linecap="round">
+      <path d="M220 1 C 150 61, 115 151, 142 233 S 196 322, 220 345" stroke-width="1.1"/>
+      <path d="M220 40 C 168 90, 140 165, 162 240" stroke-width=".5" opacity=".6"/>
+      <path d="M220 71 C 176 121, 160 193, 192 263" stroke-width=".9"/>
+      <path d="M220 -9 C 120 51, 78 163, 120 253 S 186 333, 220 346" stroke-width=".6" opacity=".7"/>
+    </g>
+  </svg>
+  <div class="final-in">
+    <p class="eyebrow centro">Black Friday 2026</p>
+    <span class="assinatura">Dra. Rosana Vecchi</span>
+    <div class="info-linha">
+      <span><svg class="ic"><use href="#i-cal"/></svg>04 de novembro</span>
+      <span><svg class="ic"><use href="#i-relogio"/></svg>20h</span>
+      <span><svg class="ic"><use href="#i-live"/></svg>Ao vivo</span>
+    </div>
+    <div class="slot-form"></div>
+  </div>
+</section>
+
+<footer class="rodape" id="privacidade">
+  © 2026 Dra. Rosana Vecchi · Todos os direitos reservados.<br>
+  Ao se cadastrar, você concorda em receber comunicações sobre este evento. Seus dados não são compartilhados com terceiros.
+</footer>
+
+<script>
+  // ===== CONFIGURAÇÃO =====
+  // URL do Web App do Google Apps Script (ver google-apps-script.gs). Deixe "" para testar sem salvar.
+  const SCRIPT_URL = "";
+  // Link de convite do grupo oficial de WhatsApp.
+  const GRUPO_WHATSAPP = "";
+
+  // Monta os dois formulários a partir do mesmo modelo (garante que sejam idênticos)
+  const tpl = document.getElementById("tpl-form");
+  document.querySelectorAll(".slot-form").forEach((slot, i) => {
+    const f = tpl.content.firstElementChild.cloneNode(true);
+    f.dataset.origem = i === 0 ? "topo" : "rodape";
+    slot.replaceWith(f);
+  });
+
+  // Entrada suave ao rolar a página
+  const alvos = document.querySelectorAll(".hero-in > *, .hero-foto, .conexao-texto > *, .final-in > *");
+  alvos.forEach((el, i) => { el.classList.add("surge"); el.style.transitionDelay = (Math.min(i % 7, 6) * 90) + "ms"; });
+  const obs = "IntersectionObserver" in window ? new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("on"); obs.unobserve(e.target); } }), { threshold: .12 }) : null;
+  alvos.forEach(el => obs ? obs.observe(el) : el.classList.add("on"));
+  setTimeout(() => alvos.forEach(el => el.classList.add("on")), 2500);
+
+
+  // Máscara de WhatsApp: (62) 99999-9999
+  document.querySelectorAll('input[name="whatsapp"]').forEach(inp => {
+    inp.addEventListener("input", () => {
+      const d = inp.value.replace(/\D/g, "").slice(0, 11);
+      let v = d;
+      if (d.length > 2) v = `(${d.slice(0,2)}) ${d.slice(2)}`;
+      if (d.length > 7) v = `(${d.slice(0,2)}) ${d.slice(2, d.length - 4)}-${d.slice(-4)}`;
+      inp.value = v;
+    });
+  });
+
+  const params = new URLSearchParams(location.search);
+  const textoBotao = 'Quero participar da Black Friday <span aria-hidden="true">→</span>';
+
+  document.querySelectorAll(".lead-form").forEach(form => {
+    form.addEventListener("submit", async e => {
+      e.preventDefault();
+      const msg = form.querySelector(".msg");
+      const nome = form.nome, wpp = form.whatsapp, email = form.email;
+      [nome, wpp, email].forEach(i => i.classList.remove("erro"));
+
+      const erros = [];
+      if (nome.value.trim().split(/\s+/).length < 2) erros.push(nome);
+      if (wpp.value.replace(/\D/g, "").length < 10) erros.push(wpp);
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.value.trim())) erros.push(email);
+      if (erros.length) {
+        erros.forEach(i => i.classList.add("erro"));
+        erros[0].focus();
+        msg.textContent = "Confira os campos destacados.";
+        msg.classList.add("on");
+        return;
+      }
+
+      const btn = form.querySelector(".btn");
+      btn.disabled = true;
+      btn.textContent = "Enviando…";
+      msg.classList.remove("on");
+
+      const dados = new URLSearchParams({
+        nome: nome.value.trim(),
+        whatsapp: wpp.value.trim(),
+        email: email.value.trim(),
+        origem: form.dataset.origem,
+        utm_source: params.get("utm_source") || "",
+        utm_medium: params.get("utm_medium") || "",
+        utm_campaign: params.get("utm_campaign") || "",
+        utm_content: params.get("utm_content") || ""
+      });
+
+      // Salva o cadastro ANTES de redirecionar
+      if (SCRIPT_URL) {
+        try { await fetch(SCRIPT_URL, { method: "POST", mode: "no-cors", body: dados }); } catch (_) {}
+      }
+
+      if (GRUPO_WHATSAPP) {
+        msg.textContent = "Cadastro confirmado! Abrindo o grupo oficial…";
+        msg.classList.add("on");
+        setTimeout(() => location.href = GRUPO_WHATSAPP, 600);
+      } else {
+        msg.textContent = "Cadastro confirmado! (link do grupo ainda não configurado)";
+        msg.classList.add("on");
+        btn.disabled = false;
+        btn.innerHTML = textoBotao;
+      }
+    });
+  });
+</script>
+</body>
+</html>
