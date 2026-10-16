@@ -9,46 +9,51 @@
 //   WA_USA_NOME  'sim' se o modelo tiver {{1}} para o primeiro nome (senão, deixe vazio)
 // Sem essas propriedades, o cadastro é salvo normalmente e o envio é ignorado.
 
+// Rode esta função uma vez (botão Executar) para autorizar o envio de WhatsApp.
+function autorizar() {
+  PropertiesService.getScriptProperties().setProperties({
+    WA_PHONE_ID: '1117190214800496',      // número +55 62 8515-0061
+    WA_TEMPLATE: 'blackfriday_boasvindas',
+    WA_LANG: 'pt_BR'
+  });
+  UrlFetchApp.fetch('https://graph.facebook.com/', { muteHttpExceptions: true });
+  Logger.log('Autorizado. Pode publicar a nova versão.');
+}
+
 function doPost(e) {
+  var p = (e && e.parameter) ? e.parameter : {};
+  var linha = [new Date(), p.nome || '', p.whatsapp || '', p.email || '', p.origem || '',
+               p.utm_source || '', p.utm_medium || '', p.utm_campaign || '', p.utm_content || '', ''];
+  var sheet, numLinha = 0;
+
+  // 1) Grava o cadastro. Se a fila estiver cheia (pico de acessos), grava mesmo assim.
   var lock = LockService.getScriptLock();
-  lock.waitLock(10000); // evita que dois cadastros simultâneos se sobrescrevam
+  var temLock = lock.tryLock(20000);
   try {
     var ss = SpreadsheetApp.getActiveSpreadsheet();
-    var sheet = ss.getSheetByName('Black Friday') || ss.insertSheet('Black Friday');
-
+    sheet = ss.getSheetByName('Black Friday') || ss.insertSheet('Black Friday');
     if (sheet.getLastRow() === 0) {
       sheet.appendRow(['Data/Hora', 'Nome', 'WhatsApp', 'E-mail', 'Formulário',
                        'utm_source', 'utm_medium', 'utm_campaign', 'utm_content', 'Mensagem WhatsApp']);
       sheet.getRange(1, 1, 1, 10).setFontWeight('bold').setBackground('#151515').setFontColor('#D9B56E');
       sheet.setFrozenRows(1);
-    } else if (sheet.getRange(1, 10).getValue() === '') {
-      sheet.getRange(1, 10).setValue('Mensagem WhatsApp')
-           .setFontWeight('bold').setBackground('#151515').setFontColor('#D9B56E');
     }
-
-    var p = (e && e.parameter) ? e.parameter : {};
-    sheet.appendRow([
-      new Date(),
-      p.nome || '',
-      p.whatsapp || '',
-      p.email || '',
-      p.origem || '',
-      p.utm_source || '',
-      p.utm_medium || '',
-      p.utm_campaign || '',
-      p.utm_content || '',
-      ''
-    ]);
-    var linha = sheet.getLastRow();
-    lock.releaseLock();
-
-    sheet.getRange(linha, 10).setValue(enviaWhatsApp(p.nome || '', p.whatsapp || ''));
-    return ContentService.createTextOutput('ok');
+    sheet.appendRow(linha);
+    if (temLock) numLinha = sheet.getLastRow();
   } catch (err) {
     return ContentService.createTextOutput('erro: ' + err);
   } finally {
-    try { lock.releaseLock(); } catch (_) {}
+    if (temLock) lock.releaseLock();
   }
+
+  // 2) Envia a mensagem de boas-vindas e anota o resultado (falha aqui não perde o cadastro).
+  try {
+    var status = enviaWhatsApp(p.nome || '', p.whatsapp || '');
+    if (numLinha) sheet.getRange(numLinha, 10).setValue(status);
+  } catch (err) {
+    if (numLinha) sheet.getRange(numLinha, 10).setValue('erro: ' + String(err).slice(0, 120));
+  }
+  return ContentService.createTextOutput('ok');
 }
 
 // Envia o modelo aprovado para o número cadastrado. Retorna o status para a planilha.
@@ -57,7 +62,8 @@ function enviaWhatsApp(nome, telefone) {
   if (!cfg.WA_TOKEN || !cfg.WA_PHONE_ID || !cfg.WA_TEMPLATE) return 'não configurado';
 
   var numero = String(telefone).replace(/\D/g, '');
-  if (numero.length === 10 || numero.length === 11) numero = '55' + numero; // DDD + número -> Brasil
+  if (numero.length > 11 && numero.indexOf('55') === 0) { /* já tem 55 */ }
+  else if (numero.length === 10 || numero.length === 11) numero = '55' + numero; // DDD + número -> Brasil
   if (numero.length < 12) return 'número inválido';
 
   var primeiroNome = String(nome).trim().split(/\s+/)[0] || 'tudo bem';
@@ -90,15 +96,4 @@ function enviaWhatsApp(nome, telefone) {
   } catch (err) {
     return 'erro: ' + String(err).slice(0, 120);
   }
-}
-
-// Rode esta função uma vez (botão Executar) para autorizar o envio de WhatsApp.
-function autorizar() {
-  PropertiesService.getScriptProperties().setProperties({
-    WA_PHONE_ID: '1117190214800496',      // número +55 62 8515-0061
-    WA_TEMPLATE: 'blackfriday_boasvindas',
-    WA_LANG: 'pt_BR'
-  });
-  UrlFetchApp.fetch('https://graph.facebook.com/', { muteHttpExceptions: true });
-  Logger.log('Autorizado. Pode publicar a nova versão.');
 }

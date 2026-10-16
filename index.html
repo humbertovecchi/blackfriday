@@ -309,7 +309,10 @@
   // Máscara de WhatsApp: (62) 99999-9999
   document.querySelectorAll('input[name="whatsapp"]').forEach(inp => {
     inp.addEventListener("input", () => {
-      const d = inp.value.replace(/\D/g, "").slice(0, 11);
+      let d = inp.value.replace(/\D/g, "");
+      if (d.length > 11 && d.startsWith("55")) d = d.slice(2);   // colado com +55
+      if (d.length > 11 && d.startsWith("0")) d = d.replace(/^0+/, ""); // 0 de operadora
+      d = d.slice(0, 11);
       let v = d;
       if (d.length > 2) v = `(${d.slice(0,2)}) ${d.slice(2)}`;
       if (d.length > 7) v = `(${d.slice(0,2)}) ${d.slice(2, d.length - 4)}-${d.slice(-4)}`;
@@ -319,6 +322,9 @@
 
   const params = new URLSearchParams(location.search);
   const textoBotao = 'Quero participar da Black Friday <span aria-hidden="true">→</span>';
+
+  // Ao voltar do WhatsApp pelo botão "voltar", reativa o botão
+  addEventListener("pageshow", () => document.querySelectorAll(".lead-form .btn").forEach(b => { b.disabled = false; b.innerHTML = textoBotao; }));
 
   document.querySelectorAll(".lead-form").forEach(form => {
     form.addEventListener("submit", async e => {
@@ -357,7 +363,8 @@
 
       // Salva o cadastro ANTES de redirecionar
       if (SCRIPT_URL) {
-        try { await fetch(SCRIPT_URL, { method: "POST", mode: "no-cors", body: dados }); } catch (_) {}
+        const envio = fetch(SCRIPT_URL, { method: "POST", mode: "no-cors", body: dados, keepalive: true }).catch(() => {});
+        await Promise.race([envio, new Promise(r => setTimeout(r, 8000))]); // no máximo 8 s de espera
       }
 
       if (GRUPO_WHATSAPP) {
