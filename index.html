@@ -92,10 +92,10 @@
   .hero .card{width:clamp(282px,60vw,470px);margin-top:clamp(10px,2.4vw,22px)}
 
   /* ===== 02 · CONEXÃO ===== */
-  .conexao{display:grid;grid-template-columns:57% 43%;background:var(--off);color:#1d1a17;min-height:59vw}
-  .conexao-foto{position:relative;overflow:hidden;background:var(--off)}
-  .conexao-foto img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:0 0;transform:scale(1.12);transform-origin:0 0}
-  .conexao-foto img{-webkit-mask-image:linear-gradient(90deg,#000 48%,rgba(0,0,0,.82) 62%,rgba(0,0,0,.5) 76%,rgba(0,0,0,.2) 89%,transparent 100%);mask-image:linear-gradient(90deg,#000 48%,rgba(0,0,0,.82) 62%,rgba(0,0,0,.5) 76%,rgba(0,0,0,.2) 89%,transparent 100%)}
+  .conexao{position:relative;overflow:hidden;display:grid;grid-template-columns:57% 43%;background:var(--off);color:#1d1a17;min-height:59vw}
+  .conexao-foto{position:absolute;inset:0;overflow:hidden;background:var(--off)}
+  .conexao-foto img{position:absolute;top:0;left:0;height:100%;width:auto;max-width:none}
+  .conexao-texto{grid-column:2;position:relative;z-index:1}
   .conexao-foto .tag{position:absolute;z-index:2;left:4vw;top:2.8vw;font-size:clamp(6.5px,1.45vw,11px);letter-spacing:.32em;text-transform:uppercase;color:#8E7148;line-height:1.75;font-weight:500}
   .conexao-texto{padding:2.4vw 5vw 5vw 1vw;display:flex;flex-direction:column;justify-content:center}
   .conexao .eyebrow{font-size:clamp(6.5px,1.45vw,11px);color:#a88a5a;gap:.8em;letter-spacing:.24em;margin-bottom:clamp(8px,2vw,18px)}
@@ -126,6 +126,12 @@
   @media (prefers-reduced-motion:reduce){.surge{opacity:1;transform:none;transition:none}.btn::after{animation:none}}
   .rodape{background:#0b0a08;border-top:1px solid rgba(183,154,105,.15);padding:20px 20px 26px;text-align:center;font-size:11.5px;color:rgba(255,255,255,.45);line-height:1.6}
 
+  /* ===== celular / tablet ===== */
+  @media (max-width:899px){
+    .conexao-foto .tag{top:auto;bottom:4.5vw;left:4vw;color:#E4C995;text-shadow:0 1px 6px rgba(0,0,0,.6)}
+    .conexao-texto::before{content:"";position:absolute;inset:0 0 0 -4vw;z-index:-1;background:linear-gradient(90deg,rgba(245,241,234,0) 0%,rgba(245,241,234,.78) 9vw,rgba(245,241,234,.9) 100%)}
+  }
+
   /* ===== desktop ===== */
   @media (min-width:900px){
     .hero{min-height:0}
@@ -142,7 +148,7 @@
     .hero .card{width:470px}
 
     .conexao{min-height:620px;grid-template-columns:minmax(0,46%) 1fr}
-    .conexao-foto img{object-position:60% 20%;transform:none}
+
     .conexao-texto{padding-left:40px !important}
     .conexao-texto{padding:70px max(60px,calc(50vw - 600px)) 70px 20px}
     .conexao .eyebrow,.conexao h2,.conexao p{max-width:520px}
@@ -199,7 +205,7 @@
 <!-- 02 · CONEXÃO -->
 <section class="conexao">
   <div class="conexao-foto">
-    <img src="img/rosana-preto.jpg" alt="Dra. Rosana Vecchi" loading="lazy">
+    <img src="img/rosana-meio.jpg" alt="Dra. Rosana Vecchi" loading="lazy" width="1873" height="1070">
     <p class="tag">Referência<br>em estética<br>para<br>profissionais<br>que buscam<br>evolução</p>
   </div>
   <div class="conexao-texto">
@@ -288,6 +294,17 @@
   alvos.forEach(el => obs ? obs.observe(el) : el.classList.add("on"));
   setTimeout(() => alvos.forEach(el => el.classList.add("on")), 2500);
 
+
+  // Enquadra a foto do meio: corpo inteiro à esquerda, parede clareando até o creme sob o texto
+  const secMeio = document.querySelector(".conexao"), imgMeio = secMeio.querySelector(".conexao-foto img"), txtMeio = secMeio.querySelector(".conexao-texto");
+  function enquadra() {
+    const s = secMeio.offsetHeight / 1070;          // escala da foto (altura da seção)
+    const limite = txtMeio.offsetLeft + 6;           // onde começa o texto
+    let x0 = 1030 * s - limite;                      // desloca para o corpo terminar antes do texto
+    x0 = Math.max(0, Math.min(x0, 440 * s));         // sem cortar a cabeça
+    imgMeio.style.left = (-x0) + "px";
+  }
+  enquadra(); addEventListener("resize", enquadra); addEventListener("load", enquadra);
 
   // Máscara de WhatsApp: (62) 99999-9999
   document.querySelectorAll('input[name="whatsapp"]').forEach(inp => {
