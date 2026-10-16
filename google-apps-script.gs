@@ -91,3 +91,14 @@ function enviaWhatsApp(nome, telefone) {
     return 'erro: ' + String(err).slice(0, 120);
   }
 }
+
+// Rode esta função uma vez (botão Executar) para autorizar o envio de WhatsApp.
+function autorizar() {
+  PropertiesService.getScriptProperties().setProperties({
+    WA_PHONE_ID: '1117190214800496',      // número +55 62 8515-0061
+    WA_TEMPLATE: 'blackfriday_boasvindas',
+    WA_LANG: 'pt_BR'
+  });
+  UrlFetchApp.fetch('https://graph.facebook.com/', { muteHttpExceptions: true });
+  Logger.log('Autorizado. Pode publicar a nova versão.');
+}
