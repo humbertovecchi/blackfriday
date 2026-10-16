@@ -24,7 +24,8 @@ function doPost(e) {
   var p = (e && e.parameter) ? e.parameter : {};
   var linha = [new Date(), p.nome || '', p.whatsapp || '', p.email || '', p.origem || '',
                p.utm_source || '', p.utm_medium || '', p.utm_campaign || '', p.utm_content || '', ''];
-  var sheet, numLinha = 0;
+  var sheet, numLinha = 0, jaRecebeu = false;
+  var digitos = soDigitos(p.whatsapp);
 
   // 1) Grava o cadastro. Se a fila estiver cheia (pico de acessos), grava mesmo assim.
   var lock = LockService.getScriptLock();
@@ -38,6 +39,15 @@ function doPost(e) {
       sheet.getRange(1, 1, 1, 10).setFontWeight('bold').setBackground('#151515').setFontColor('#D9B56E');
       sheet.setFrozenRows(1);
     }
+    // Já existe uma mensagem enviada para este número? Então não envia de novo.
+    var n = sheet.getLastRow();
+    if (n > 1 && digitos) {
+      var dados = sheet.getRange(2, 3, n - 1, 8).getValues(); // colunas C (WhatsApp) .. J (Mensagem)
+      for (var i = 0; i < dados.length; i++) {
+        if (soDigitos(dados[i][0]) === digitos && /^envia(da|ndo)/.test(String(dados[i][7]))) { jaRecebeu = true; break; }
+      }
+    }
+    if (temLock) linha[9] = jaRecebeu ? 'não reenviada (número já recebeu)' : 'enviando…'; // reserva o envio
     sheet.appendRow(linha);
     if (temLock) numLinha = sheet.getLastRow();
   } catch (err) {
@@ -46,7 +56,9 @@ function doPost(e) {
     if (temLock) lock.releaseLock();
   }
 
-  // 2) Envia a mensagem de boas-vindas e anota o resultado (falha aqui não perde o cadastro).
+  // 2) Envia a mensagem de boas-vindas (uma única vez por número) e anota o resultado.
+  if (jaRecebeu) return ContentService.createTextOutput('ok');
+  if (!numLinha) return ContentService.createTextOutput('ok'); // pico extremo: grava, mas não arrisca envio duplicado
   try {
     var status = enviaWhatsApp(p.nome || '', p.whatsapp || '');
     if (numLinha) sheet.getRange(numLinha, 10).setValue(status);
@@ -54,6 +66,13 @@ function doPost(e) {
     if (numLinha) sheet.getRange(numLinha, 10).setValue('erro: ' + String(err).slice(0, 120));
   }
   return ContentService.createTextOutput('ok');
+}
+
+// Número só com dígitos, sem 55 nem 0 inicial (para comparar cadastros).
+function soDigitos(v) {
+  var d = String(v || '').replace(/\D/g, '');
+  if (d.length > 11 && d.indexOf('55') === 0) d = d.slice(2);
+  return d.replace(/^0+/, '');
 }
 
 // Envia o modelo aprovado para o número cadastrado. Retorna o status para a planilha.
