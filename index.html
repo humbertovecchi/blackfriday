@@ -10,6 +10,17 @@
 <meta property="og:image" content="https://blackfriday.drarosanaacademy.com.br/img/rosana-branco.jpg">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#151515">
+<!-- Meta Pixel -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1505006697775753');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1505006697775753&ev=PageView&noscript=1"></noscript>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@500;600&family=Montserrat:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
@@ -321,6 +332,7 @@
   });
 
   const params = new URLSearchParams(location.search);
+  const cookie = n => (document.cookie.match("(?:^|; )" + n + "=([^;]*)") || [])[1] || "";
   const textoBotao = 'Quero participar da Black Friday <span aria-hidden="true">→</span>';
 
   // Ao voltar do WhatsApp pelo botão "voltar", reativa o botão
@@ -350,6 +362,7 @@
       btn.textContent = "Enviando…";
       msg.classList.remove("on");
 
+      const eventId = "lead-" + Date.now() + "-" + Math.random().toString(36).slice(2, 10);
       const dados = new URLSearchParams({
         nome: nome.value.trim(),
         whatsapp: wpp.value.trim(),
@@ -358,8 +371,17 @@
         utm_source: params.get("utm_source") || "",
         utm_medium: params.get("utm_medium") || "",
         utm_campaign: params.get("utm_campaign") || "",
-        utm_content: params.get("utm_content") || ""
+        utm_content: params.get("utm_content") || "",
+        // Dados para a API de Conversões (mesmo event_id do Pixel = sem duplicar o Lead)
+        event_id: eventId,
+        fbp: cookie("_fbp"),
+        fbc: cookie("_fbc") || (params.get("fbclid") ? `fb.1.${Date.now()}.${params.get("fbclid")}` : ""),
+        user_agent: navigator.userAgent,
+        url: location.href
       });
+
+      // Evento Lead no Pixel (o Apps Script envia o mesmo evento pela API de Conversões)
+      if (window.fbq) fbq("track", "Lead", {}, { eventID: eventId });
 
       // Salva o cadastro ANTES de redirecionar
       if (SCRIPT_URL) {

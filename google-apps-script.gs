@@ -8,6 +8,11 @@
 //   WA_LANG      idioma do modelo (ex.: pt_BR)
 //   WA_USA_NOME  'sim' se o modelo tiver {{1}} para o primeiro nome (senão, deixe vazio)
 // Sem essas propriedades, o cadastro é salvo normalmente e o envio é ignorado.
+//
+// API de Conversões da Meta (evento Lead, deduplicado com o Pixel pelo event_id):
+//   CAPI_TOKEN   token da API de Conversões (NUNCA colocar no código: o repositório é público)
+//   CAPI_PIXEL   ID do pixel (padrão: 1505006697775753)
+//   CAPI_TEST    código de teste do Gerenciador de Eventos (opcional; apague depois de testar)
 
 // Rode esta função uma vez (botão Executar) para autorizar o envio de WhatsApp.
 function autorizar() {
@@ -56,7 +61,10 @@ function doPost(e) {
     if (temLock) lock.releaseLock();
   }
 
-  // 2) Envia a mensagem de boas-vindas (uma única vez por número) e anota o resultado.
+  // 2) Envia o Lead para a API de Conversões da Meta (falha aqui não afeta o cadastro).
+  try { enviaCAPI(p); } catch (err) { Logger.log('CAPI: ' + err); }
+
+  // 3) Envia a mensagem de boas-vindas (uma única vez por número) e anota o resultado.
   if (jaRecebeu) return ContentService.createTextOutput('ok');
   if (!numLinha) return ContentService.createTextOutput('ok'); // pico extremo: grava, mas não arrisca envio duplicado
   try {
@@ -73,6 +81,55 @@ function soDigitos(v) {
   var d = String(v || '').replace(/\D/g, '');
   if (d.length > 11 && d.indexOf('55') === 0) d = d.slice(2);
   return d.replace(/^0+/, '');
+}
+
+// SHA-256 em hexadecimal (formato exigido pela Meta para dados do usuário).
+function hash(v) {
+  v = String(v || '').trim().toLowerCase();
+  if (!v) return undefined;
+  return Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, v, Utilities.Charset.UTF_8)
+    .map(function (b) { return ('0' + (b & 255).toString(16)).slice(-2); }).join('');
+}
+
+// Envia o evento Lead pela API de Conversões. Usa o mesmo event_id do Pixel.
+function enviaCAPI(p) {
+  var cfg = PropertiesService.getScriptProperties().getProperties();
+  if (!cfg.CAPI_TOKEN) return 'não configurado';
+  var pixel = cfg.CAPI_PIXEL || '1505006697775753';
+
+  var partes = String(p.nome || '').trim().split(/\s+/);
+  var fone = soDigitos(p.whatsapp);
+  var ud = {
+    em: [hash(p.email)],
+    ph: fone ? [hash('55' + fone)] : undefined,
+    fn: [hash(partes[0])],
+    ln: partes.length > 1 ? [hash(partes[partes.length - 1])] : undefined,
+    country: [hash('br')],
+    external_id: fone ? [hash('55' + fone)] : undefined,
+    client_user_agent: p.user_agent || undefined,
+    fbp: p.fbp || undefined,
+    fbc: p.fbc || undefined
+  };
+  var corpo = {
+    data: [{
+      event_name: 'Lead',
+      event_time: Math.floor(Date.now() / 1000),
+      event_id: p.event_id || undefined,
+      action_source: 'website',
+      event_source_url: p.url || 'https://blackfriday.drarosanaacademy.com.br/',
+      user_data: ud
+    }]
+  };
+  if (cfg.CAPI_TEST) corpo.test_event_code = cfg.CAPI_TEST;
+
+  var resp = UrlFetchApp.fetch('https://graph.facebook.com/v21.0/' + pixel + '/events?access_token=' + encodeURIComponent(cfg.CAPI_TOKEN), {
+    method: 'post',
+    contentType: 'application/json',
+    payload: JSON.stringify(corpo),
+    muteHttpExceptions: true
+  });
+  Logger.log('CAPI ' + resp.getResponseCode() + ': ' + resp.getContentText().slice(0, 200));
+  return resp.getResponseCode();
 }
 
 // Envia o modelo aprovado para o número cadastrado. Retorna o status para a planilha.
